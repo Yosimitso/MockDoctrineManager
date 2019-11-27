@@ -1,0 +1,23 @@
+{
+    "name": "yosimitso/mockdoctrinemanager",
+    "description": "Mock and log Doctrine's manager",
+    "type": "symfony-bundle",
+    "require-dev": {
+        "doctrine/orm": ">=2.0",
+        "doctrine/common": ">=2.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yosimitso",
+            "email": "contactportfolio@charlymartins.fr"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Yosimitso\\MockDoctrineManager\\": ""
+
+        }
+    }
+}
