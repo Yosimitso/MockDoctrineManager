@@ -3,8 +3,9 @@ Yosimitso/DoctrineManagerMock
 
 Usage
 ---------
-Mock of Doctrine\ORM\EntityManager, this bundle logs persisted and flushed entities, and basic operations like transactions
-and enable you to check if entities are correctly registered and if your workflow is respected
+Mock of Doctrine\ORM\EntityManager, this bundle logs persisted, removed and flushed entities, and basic operations like transactions.
+It enables you to check if entities are correctly registered and if your workflow is respected
+
 Please note that this bundle is new and focus on most current operations, including :
 - persist
 - flush
@@ -106,7 +107,7 @@ class MyTest extends TestCase {
         $this->assertTrue($entityManagerMock->hasCommitted());
 
         // ASSERT WE DIDN'T ROLLBACK
-        $this->assertFalse($entityManagerMock->hasRollbacked());
+        $this->assertFalse($entityManagerMock->hasRolledback());
     }
 }
 ````

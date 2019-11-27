@@ -39,7 +39,7 @@ class EntityManagerMock implements EntityManagerInterface
     /**
      * @var bool
      */
-    protected $rollbacked;
+    protected $rolledback;
 
     /**
      * EntityManagerMock constructor.
@@ -51,7 +51,7 @@ class EntityManagerMock implements EntityManagerInterface
         $this->removedEntities = [];
         $this->beganTransaction = false;
         $this->comitted = false;
-        $this->rollbacked = false;
+        $this->rolledback = false;
     }
 
 
@@ -168,7 +168,7 @@ class EntityManagerMock implements EntityManagerInterface
             }
         }
 
-        throw new \Exception('Class '.$className.' not found in persisted entities');
+        throw new \Exception('getPersistedEntity : class '.$className.' not found in persisted entities');
     }
 
     /**
@@ -196,6 +196,31 @@ class EntityManagerMock implements EntityManagerInterface
     }
 
     /**
+     * Get removed entity by its class
+     * @param $className
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getRemovedEntity($className, $position = 1)
+    {
+        if ($position < 1) {
+            throw new \Exception('getRemovedEntity : position can\'t be inferior to 1');
+        }
+        $i = 0;
+        foreach ($this->removedEntities as $entity) {
+            if (get_class($entity) === $className) {
+                $i++;
+                if ($i === $position) {
+                    return $entity;
+                }
+
+            }
+        }
+
+        throw new \Exception('getRemovedEntity : '.$className.' not found in persisted entities');
+    }
+
+    /**
      * @return void
      */
     public function beginTransaction()
@@ -216,7 +241,7 @@ class EntityManagerMock implements EntityManagerInterface
      */
     public function rollback()
     {
-        $this->rollbacked = true;
+        $this->rolledback = true;
     }
 
     /**
@@ -236,12 +261,12 @@ class EntityManagerMock implements EntityManagerInterface
     }
 
     /**
-     * Returns if the entity manager has rollbacked
+     * Returns if the entity manager has rolledback
      * @return bool
      */
-    public function hasRollbacked()
+    public function hasRolledback()
     {
-        return $this->rollbacked;
+        return $this->rolledback;
     }
 
     public function find($className, $id) {
