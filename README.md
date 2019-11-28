@@ -3,7 +3,7 @@ Yosimitso/DoctrineManagerMock
 
 Usage
 ---------
-Mock of Doctrine\ORM\EntityManager, this bundle logs persisted, removed and flushed entities, and basic operations like transactions.
+Mock of Doctrine\ORM\EntityManager which implements EntityManagerInterface, this bundle logs persisted, removed and flushed entities, and basic operations like transactions.
 It enables you to check if entities are correctly registered and if your workflow is respected
 
 Please note that this bundle is new and focus on most current operations, including :
@@ -127,4 +127,42 @@ class ClassToTestServiceTest extends TestCase {
 
 Use the 'position' argument of getPersistedEntity, example if I want to get the second persisted "YourClass" : getPersistedEntity(YourClass::class, 2);
 
+**My code use 'findBy' methods**
 
+This bundle can't guess what you're expecting from 'findBy',
+so just create a mock of this bundle like any other class, in order to mock 'findBy'
+
+Example with PHPUnit :
+````php
+$yourEntity = new Article(); // EXAMPLE OF AN ENTITY
+
+$yourEntity->setName('hello');
+
+$entityManager = $this->getMockBuilder(EntityManagerMock)
+                    ->setMethods(['findBy']);
+
+$entityManager->methods('findBy')->willReturn($yourEntity);
+````
+
+API
+-------------------
+````php
+/* returns this entity persisted in n position (among its namespace) */
+getPersistedEntity($className, $position = 1): mixed
+
+/* returns this entity removed in n position (among its namespace) */
+getRemovedEntity($className, $position = 1): mixed
+
+/* returns this entity flushed in n position (among its namespace) */
+getFlushedEntity($className, $position = 1): mixed
+
+/** returns the list of persisted entites */
+getPersistedEntities(): array
+
+/** returns the list of flushed entites */
+getFlushedEntities(): array
+
+hasBegunTransaction(): boolean
+hasComitted(): boolean
+hasRolledback(): boolean
+````

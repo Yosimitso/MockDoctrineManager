@@ -14,7 +14,6 @@ class ClassToTestService
     public function __construct(EntityManagerInterface $entityManager) // YOU CAN TYPE ENTITYMANAGERINTERFACE
     {
         $this->entityManager = $entityManager;
-        $this->dataToTest = [];
     }
 
     public function methodToTest($nb)
@@ -22,6 +21,7 @@ class ClassToTestService
         $newEntity = new EntityToTest;
         $newEntity->setNb($nb);
 
+        /** CLASSIC WORKFLOW */
         try {
             $this->entityManager->beginTransaction();
             $this->entityManager->persist($newEntity);
