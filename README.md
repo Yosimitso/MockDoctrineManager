@@ -19,7 +19,7 @@ Feel free to submit a PR to expand the features
 Installation
 --------------
 ````
-composer require "yosimitso/doctrinemanagermock" --dev
+composer require "yosimitso/doctrinemanagermock:dev-master" --dev
 ````
 
 Example
