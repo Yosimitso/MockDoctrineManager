@@ -45,7 +45,6 @@ class ClassToTestService
     public function __construct(EntityManagerInterface $entityManager) // YOU CAN TYPE ENTITYMANAGERINTERFACE
     {
         $this->entityManager = $entityManager;
-        $this->dataToTest = [];
     }
 
     public function methodToTest($nb)
