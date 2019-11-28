@@ -16,20 +16,26 @@ Please note that this bundle is new and focus on most current operations, includ
 
 Feel free to submit a PR to expand the features
 
+Installation
+--------------
+````
+composer require "yosimitso/doctrinemanagermock" --dev
+````
+
 Example
 ---------------
 Simple example to check if your entity was actually persisted and with good data,
 
-Example of class to test :
+Example from the actual test of this bundle :
 
 ````php
 <?php
 
-namespace App\Services;
+namespace Yosimitso\MockDoctrineManager\Tests;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\EntityToTest;
+use Yosimitso\MockDoctrineManager\Tests\Entity\EntityToTest;
 
-class ClassToTest
+class ClassToTestService
 {
     /**
      * @var EntityManagerInterface
@@ -63,16 +69,15 @@ class ClassToTest
 
 Example of entity
 ```php
-
 <?php
-namespace App\Entity;
+namespace Yosimitso\MockDoctrineManager\Tests\Entity;
 class EntityToTest
 {
     private $nb;
 
     public function setNb($nb)      // CLASSIC SETTER
     {
-       $this->nb = $nb;
+        $this->nb = $nb;
     }
 
     public function getNb()         // CLASSIC GETTER
@@ -80,23 +85,29 @@ class EntityToTest
         return $this->nb;
     }
 }
+
 ````
 
-Test of EntityToTest
+Test
 ```php
 <?php
-use Yosimitso\MockDoctrineManager\EntityManagerMock;
-use App\Entity\EntityToTest;
-use PHPUnit\Framework\TestCase;                     // ASSUMING YOU'RE USING PHPUNIT, BUT IT WORKS WITH ANY TESTING FRAMEWORK
+namespace Yosimitso\MockDoctrineManager\Tests\Test;
 
-class MyTest extends TestCase {
+use Yosimitso\MockDoctrineManager\EntityManagerMock;
+use Yosimitso\MockDoctrineManager\Tests\Entity\EntityToTest;
+use Yosimitso\MockDoctrineManager\Tests\ClassToTestService;
+use PHPUnit\Framework\TestCase;  // ASSUMING YOU'RE USING PHPUNIT, BUT IT WORKS WITH ANY TESTING FRAMEWORK
+
+class ClassToTestServiceTest extends TestCase {
     public function testMethodToTest()
     {
-        $entityManagerMock = new EntityManagerMock();
-        $testedClass = new ClassToTest($entityManagerMock);
-        $testedClass->methodToTest(10);
+        $entityManagerMock = new EntityManagerMock(); // THIS BUNDLE 
+        $testedClass = new ClassToTestService($entityManagerMock); // THE CLASS TO TEST
+        $testedClass->methodToTest(10);     // THE METHOD TO TEST
 
+        // ASSERT WE BEGAN THE TRANSACTION
         $this->assertTrue($entityManagerMock->hasBegunTransaction());
+
         // ASSERT WE PERSISTED THE GOOD ENTITY WITH THE GOOD DATA
         $this->assertEquals(10, $entityManagerMock->getPersistedEntity(EntityToTest::class)->getNb());
 
@@ -113,6 +124,7 @@ class MyTest extends TestCase {
 ````
 
 **What if I persisted two or more instance of a class ?**
+
 Use the 'position' argument of getPersistedEntity, example if I want to get the second persisted "YourClass" : getPersistedEntity(YourClass::class, 2);
 
 

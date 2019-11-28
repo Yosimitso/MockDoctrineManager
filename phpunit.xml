@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
+    <!-- Les fichiers de tests à lancer -->
+    <testsuites>
+        <testsuite name="tests">
+            <directory suffix="Test.php">./Tests/Test</directory>
+        </testsuite>
+    </testsuites>
+    <!-- Quels fichiers sont concernés par l'évaluation du code coverage -->
+    <filter>
+        <whitelist>
+            <directory>./Tests</directory>
+        </whitelist>
+    </filter>
+</phpunit>
