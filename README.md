@@ -32,6 +32,8 @@ Simple example to check if your entity was actually persisted and with good data
 
 Example from the actual test of this bundle :
 
+**The class to test**
+
 ````php
 <?php
 
@@ -70,7 +72,7 @@ class ClassToTestService
 }
 ````
 
-Example of entity
+**Example of entity**
 ```php
 <?php
 namespace Yosimitso\MockDoctrineManager\Tests\Entity;
@@ -91,7 +93,7 @@ class EntityToTest
 
 ````
 
-Test
+**The Test**
 ```php
 <?php
 namespace Yosimitso\MockDoctrineManager\Tests\Test;
@@ -137,12 +139,13 @@ so just create a mock of this bundle like any other class, in order to mock 'fin
 
 Example with PHPUnit :
 ````php
-$yourEntity = new Article(); // EXAMPLE OF AN ENTITY
+$yourEntity = new Article; // EXAMPLE OF AN ENTITY
 
 $yourEntity->setName('hello');
 
-$entityManager = $this->getMockBuilder(EntityManagerMock)
-                    ->setMethods(['findBy']);
+$entityManager = $this->getMockBuilder(EntityManagerMock::class)
+                    ->setMethods(['findBy'])
+                    ->getMock();
 
 $entityManager->methods('findBy')->willReturn($yourEntity);
 ````
@@ -151,13 +154,13 @@ API
 -------------------
 ````php
 /* returns this entity persisted in n position (among its namespace) */
-getPersistedEntity($className, $position = 1): mixed
+getPersistedEntity(object $className, int $position = 1): mixed
 
 /* returns this entity removed in n position (among its namespace) */
-getRemovedEntity($className, $position = 1): mixed
+getRemovedEntity(object $className, int $position = 1): mixed
 
 /* returns this entity flushed in n position (among its namespace) */
-getFlushedEntity($className, $position = 1): mixed
+getFlushedEntity(object $className, int $position = 1): mixed
 
 /** returns the list of persisted entites */
 getPersistedEntities(): array
