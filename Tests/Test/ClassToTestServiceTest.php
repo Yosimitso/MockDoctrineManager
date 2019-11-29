@@ -26,4 +26,24 @@ class ClassToTestServiceTest extends TestCase {
         // ASSERT WE DIDN'T ROLLBACK
         $this->assertFalse($entityManagerMock->hasRolledback());
     }
+
+    public function testTransactionnalToTest()
+    {
+        $entityManagerMock = new EntityManagerMock();
+        $testedClass = new ClassToTestService($entityManagerMock);
+        $testedClass->transactionnalToTest();
+
+        $this->assertTrue($entityManagerMock->hasBegunTransaction());
+        // ASSERT WE PERSISTED THE GOOD ENTITY WITH THE GOOD DATA
+        $this->assertEquals(20, $entityManagerMock->getPersistedEntity(EntityToTest::class)->getNb());
+
+        // ASSERT WE FLUSHED THE GOOD ENTITY WITH THE GOOD DATA
+        $this->assertEquals(20, $entityManagerMock->getFlushedEntity(EntityToTest::class)->getNb());
+
+        // ASSERT WE COMITTED
+        $this->assertTrue($entityManagerMock->hasCommitted());
+
+        // ASSERT WE DIDN'T ROLLBACK
+        $this->assertFalse($entityManagerMock->hasRolledback());
+    }
 }

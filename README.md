@@ -13,6 +13,7 @@ Please note that this bundle is new and focus on most current operations, includ
 - beginTransaction
 - commit
 - rollback
+- transactionnal
 
 Feel free to submit a PR to expand the features
 
@@ -21,7 +22,10 @@ Installation
 ````
 composer require "yosimitso/doctrinemanagermock:dev-master" --dev
 ````
-
+Then just instanciate it
+````php 
+ $entityManager = new Yosimitso\MockDoctrineManager\EntityManagerMock;
+````
 Example
 ---------------
 Simple example to check if your entity was actually persisted and with good data,

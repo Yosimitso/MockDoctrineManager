@@ -273,12 +273,22 @@ class EntityManagerMock implements EntityManagerInterface
         throw new \Exception('You need to mock the "find" method to fits your needs about the entity returned');
     }
 
+    public function transactional($func) {
+        $this->beginTransaction();
+        try {
+            $func();
+            $this->commit();
+        } catch (\Exception $e) {
+            $this->rollback();
+        }
+    }
+
+    //see contains - lock - close
 
     /** INACTIVE METHOD FROM DOCTRINE MANAGER INTERFACE */
     public function getCache() {}
     public function getConnection() {}
     public function getExpressionBuilder() {}
-    public function transactional($func) {}
     public function createQuery($dql = '') {}
     public function createNamedQuery($name) {}
     public function createNativeQuery($sql, ResultSetMapping $rsm) {}

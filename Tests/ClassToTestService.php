@@ -33,4 +33,14 @@ class ClassToTestService
 
 
     }
+
+    public function transactionnalToTest()
+    {
+        $this->entityManager->transactional(function() {
+            $newEntity = new EntityToTest;
+            $newEntity->setNb('20');
+            $this->entityManager->persist($newEntity);
+            $this->entityManager->flush($newEntity);
+        });
+    }
 }
