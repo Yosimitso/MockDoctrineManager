@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Yosimitso/MockDoctrineManager.svg?branch=master)](https://travis-ci.org/Yosimitso/MockDoctrineManager)
+
 Yosimitso/DoctrineManagerMock
 =============================
 
