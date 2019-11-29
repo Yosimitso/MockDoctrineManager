@@ -20,7 +20,7 @@ Feel free to submit a PR to expand the features
 Installation
 --------------
 ````
-composer require "yosimitso/doctrinemanagermock:dev-master" --dev
+composer require "yosimitso/doctrinemanagermock:^1.0" --dev
 ````
 Then just instanciate it
 ````php 
